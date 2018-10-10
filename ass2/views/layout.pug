@@ -1,7 +1,31 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    // CSS
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css')
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+
+    title CAB432 Assignment 2
   body
-    block content
+    .navbar-fixed
+      nav
+        .nav-wrapper.indigo
+          a.brand-logo.center(href='#!') CAB432 Assignment 2
+    .row
+      .col.s12.m4.l3
+        // Note that "m4 l3" was added
+        ul
+          li.search
+          .search-wrapper
+            form(action='/', method='post')
+              .input-field.col.s12
+                input#searchquery.validate(type='text', name='query')
+                label(for='searchquery')
+                  | Search For Any Subject 
+                  i.material-icons.right search
+          each val in trending
+            li
+              a(href='/q='+val)= val
+      .col.s12.m8.l9
+        block content
