@@ -1,0 +1,64 @@
+extends layout
+
+block content
+  .sidenav.sidenav-fixed
+    .search-wrapper.center
+      form(action='/', method='post')
+        .input-field.col.s12
+          input#searchquery.validate(type='text', name='q')
+          button.btn.waves-effect.waves-light.centre.indigo(type='submit', value='Submit')
+            | Search
+            i.material-icons.right search
+    .collection
+      each val in trending
+        .collection-item.indigo-text#test
+          | #{val}
+  .main(style='padding-left: 300px;')
+    .center
+      h1 TweetStorm
+      #donutchart(style="width: 900px; height: 500px; display: block; margin: 0 auto;")
+      #output
+
+  .footer(style='padding-left: 300px;').page-footer.indigo
+    .container
+      .row
+        .col.l6.s12
+          h5.white-text CAB432 Assignment 2
+          p.grey-text.text-lighten-4 TweetStorm, a legendary assignment worthy of a 7.
+        .col.l4.offset-l2.s12
+          h5.white-text Links
+          ul
+            li
+              a.grey-text.text-lighten-3(href='http://twitter.com') Link Twitter
+            li
+              a.grey-text.text-lighten-3(href='https://www.nltk.org') Link NTLK
+            li
+              a.grey-text.text-lighten-3(href='http://compromise.cool') Compromise
+            li
+              a.grey-text.text-lighten-3(href='https://mlab.com') mLab
+    .footer-copyright
+      .container
+        | © 2014 Copyright Text
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+  script(src="https://code.jquery.com/jquery-3.1.1.min.js")
+  script.
+    $(document).ready(function() {
+      let query = '';
+      $(".collection-item").click(function(){
+        query += $(this).text() + ', '; 
+        $('#searchquery').val(query);
+      });
+
+    });
+  script(type='text/javascript').
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+      var data = google.visualization.arrayToDataTable(!{tweets});
+      var options = {
+      title: 'Sentiment of Trending Hashtags!',
+      pieHole: 0.4,
+      };
+      var chart = new google.visualization.BarChart(document.getElementById('donutchart'));
+      chart.draw(data, options);
+      }

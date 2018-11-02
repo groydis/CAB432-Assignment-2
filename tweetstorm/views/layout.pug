@@ -1,0 +1,58 @@
+doctype html
+html(lang='en')
+  head
+    // CSS
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css')
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+
+    title TweetStorm
+    script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
+  body
+    .navbar-fixed
+      nav
+        .nav-wrapper.indigo
+          a.brand-logo.center(href='#!') TweetStorm
+
+    block content
+
+    footer.page-footer.indigo
+      .container
+        .row
+          .col.l6.s12
+            h5.white-text CAB432 Assignment 2
+            p.grey-text.text-lighten-4 TweetStorm, a legendary assignment worthy of a 7.
+          .col.l4.offset-l2.s12
+            h5.white-text Links
+            ul
+              li
+                a.grey-text.text-lighten-3(href='http://twitter.com') Link Twitter
+              li
+                a.grey-text.text-lighten-3(href='https://www.nltk.org') Link NTLK
+              li
+                a.grey-text.text-lighten-3(href='http://compromise.cool') Compromise
+              li
+                a.grey-text.text-lighten-3(href='#!') Link 4
+      .footer-copyright
+        .container
+          | © 2014 Copyright Text
+          //!{JSON.stringify(graphData)}
+    script(type='text/javascript').
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(!{JSON.stringify(graphData)});
+
+        var options = {
+          chart: {
+            title: 'Average Sentiment',
+          },
+          hAxis: { ticks: [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0] }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+

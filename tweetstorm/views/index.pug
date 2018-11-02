@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  .row
+    .col.s12.m4.l3.z-depth-1
+      .search-wrapper
+        form(action='/', method='get')
+          .input-field.col.s12
+            input#searchquery.validate(type='text', name='q')
+            button.btn.waves-effect.waves-light.centre.indigo(type='submit', value='Submit')
+              | Search
+              i.material-icons.right search
+      .collection
+        each val in trending
+          .collection-item.indigo-text#test
+            | #{val.title}
+    .col.s12.m8.l9
+      h1= title
+      p Welcome to #{title}
+      #columnchart_material
+      #output
+  script(src="https://code.jquery.com/jquery-3.1.1.min.js")
+  script.
+    onload = function readTweets() {
+      $.get('/results', function (data) {
+        displayTweets(data);
+      });
+    }
+    function displayTweets(data) {
+      for (let i = 0; i < data.length; i++) {
+        let msg = data[i];
+        let output = '<p>' + msg.message + '</p>';
+        output += '<p>' + msg.sentiment + '</p>';
+        $("#output").prepend(output);
+      }
+    }
+    $(document).ready(function() {
+      let query = '';
+      $(".collection-item").click(function(){
+        query += $(this).text() + ', '; 
+        $('#searchquery').val( query);
+      });
+
+    });
+
